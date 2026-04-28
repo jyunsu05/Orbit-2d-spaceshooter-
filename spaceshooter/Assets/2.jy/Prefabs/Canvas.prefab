@@ -162,7 +162,7 @@ GameObject:
   - component: {fileID: 8916592491569008855}
   - component: {fileID: 5601646727822145339}
   m_Layer: 5
-  m_Name: boom_0
+  m_Name: boomLife_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 6624021672767279227}
   - component: {fileID: 4109595495362409422}
   m_Layer: 5
-  m_Name: boom_1
+  m_Name: boomLife_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1030,7 +1030,7 @@ GameObject:
   - component: {fileID: 744337098929739507}
   - component: {fileID: 2529001053161807863}
   m_Layer: 5
-  m_Name: boom_2
+  m_Name: boomLife_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
