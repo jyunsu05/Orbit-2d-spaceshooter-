@@ -45,6 +45,8 @@
 
 # Visual Studio cache directory
 .vs/
+.idea/
+/spaceshooter/.idea/
 
 # Gradle cache directory
 .gradle/
