@@ -10,14 +10,34 @@ public class Player : MonoBehaviour
     // 인스펙터(유니티 화면)에서 숫자를 바꾸면 속도가 달라짐
     public float moveSpeed = 5f;
 
+    // 멈춰 있을 때 보여줄 기본 이미지
+    public Sprite spriteCenter;
+
+    // 오른쪽/왼쪽 이동 애니메이션 프레임(순서대로 0,1,2,3 넣기)
+    public Sprite[] rightSprites = new Sprite[4];
+    public Sprite[] leftSprites = new Sprite[4];
+
+    // 프레임이 바뀌는 속도 (작을수록 더 빨리 바뀜)
+    public float frameTime = 0.08f;
+
     // Rigidbody2D = 물리 이동을 담당하는 컴포넌트 (충돌, 이동 등)
     private Rigidbody2D rb;
+
+    // SpriteRenderer = 스프라이트(그림)를 화면에 보여주는 컴포넌트
+    private SpriteRenderer sr;
 
     // 키보드 입력값을 저장하는 변수
     // moveX: 좌우 입력 (-1 = 왼쪽, 0 = 안누름, 1 = 오른쪽)
     // moveY: 상하 입력 (-1 = 아래,   0 = 안누름, 1 = 위)
     private float moveX;
     private float moveY;
+
+    // 애니메이션 진행용 변수
+    private float frameTimer;
+    private int frameIndex;
+
+    // 현재 바라보는 방향 저장 (-1: 왼쪽, 0: 중앙, 1: 오른쪽)
+    private int currentDir;
 
     // -----------------------------------------------
     // Start: 게임이 시작될 때 딱 한 번만 실행됨
@@ -27,11 +47,17 @@ public class Player : MonoBehaviour
         // 이 오브젝트에 붙어있는 Rigidbody2D를 가져옴
         rb = GetComponent<Rigidbody2D>();
 
+        // 이 오브젝트에 붙어있는 SpriteRenderer를 가져옴
+        sr = GetComponent<SpriteRenderer>();
+
         // 중력을 0으로 설정 (우주 공간이라 중력 없음)
         rb.gravityScale = 0f;
 
         // 물리 충돌 시 캐릭터가 빙글빙글 돌지 않도록 회전 고정
         rb.freezeRotation = true;
+
+        // 시작할 때 기본 모습으로 설정
+        if (spriteCenter != null) sr.sprite = spriteCenter;
     }
 
     // -----------------------------------------------
@@ -45,6 +71,66 @@ public class Player : MonoBehaviour
 
         // W/S 키 또는 방향키 상하를 누르면 -1 또는 1이 들어옴
         moveY = Input.GetAxisRaw("Vertical");
+
+        // 좌우 입력에 따라 스프라이트(프레임 애니메이션) 변경
+        UpdateSpriteByDirection();
+    }
+
+    void UpdateSpriteByDirection()
+    {
+        // 오른쪽 이동: rightSprites를 0→1→2→3 순서로 반복
+        if (moveX > 0)
+        {
+            if (currentDir != 1)
+            {
+                currentDir = 1;
+                frameIndex = 0;
+                frameTimer = 0f;
+            }
+
+            PlayFrameAnimation(rightSprites);
+            return;
+        }
+
+        // 왼쪽 이동: leftSprites를 0→1→2→3 순서로 반복
+        if (moveX < 0)
+        {
+            if (currentDir != -1)
+            {
+                currentDir = -1;
+                frameIndex = 0;
+                frameTimer = 0f;
+            }
+
+            PlayFrameAnimation(leftSprites);
+            return;
+        }
+
+        // 좌우 입력이 없으면 기본 이미지로 복귀
+        currentDir = 0;
+        frameIndex = 0;
+        frameTimer = 0f;
+        if (spriteCenter != null) sr.sprite = spriteCenter;
+    }
+
+    void PlayFrameAnimation(Sprite[] frames)
+    {
+        // 프레임 배열이 비어 있으면 아무 것도 하지 않음
+        if (frames == null || frames.Length == 0) return;
+
+        // 현재 프레임을 먼저 보여줌
+        if (frames[frameIndex] != null) sr.sprite = frames[frameIndex];
+
+        // 일정 시간이 지나면 다음 프레임으로 넘김
+        frameTimer += Time.deltaTime;
+        if (frameTimer >= frameTime)
+        {
+            frameTimer = 0f;
+            frameIndex++;
+
+            // 마지막 프레임 이후에는 다시 0번으로 돌아감
+            if (frameIndex >= frames.Length) frameIndex = 0;
+        }
     }
 
     // -----------------------------------------------
@@ -97,7 +183,6 @@ public class Player : MonoBehaviour
         // → 캐릭터 중심이 아닌 캐릭터 가장자리가 화면 끝에 딱 맞도록
         float spriteHalfW = 0f;
         float spriteHalfH = 0f;
-        SpriteRenderer sr = GetComponent<SpriteRenderer>();
         if (sr != null)
         {
             spriteHalfW = sr.bounds.extents.x; // 스프라이트 가로 절반

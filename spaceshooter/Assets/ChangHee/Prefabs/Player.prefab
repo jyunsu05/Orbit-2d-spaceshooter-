@@ -106,6 +106,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewPlayer
   moveSpeed: 5
+  spriteCenter: {fileID: 4545135470104253956, guid: 6875e9ca69087ec4782ba183e2643e08, type: 3}
+  rightSprites:
+  - {fileID: -4709456396536258026, guid: 6520dda4a70dfbf40a55b7af39ecda4e, type: 3}
+  - {fileID: -4529042392078601758, guid: 6520dda4a70dfbf40a55b7af39ecda4e, type: 3}
+  - {fileID: -7446026091647042388, guid: 6520dda4a70dfbf40a55b7af39ecda4e, type: 3}
+  - {fileID: 5938012242645255967, guid: 6520dda4a70dfbf40a55b7af39ecda4e, type: 3}
+  leftSprites:
+  - {fileID: -4245738604243887485, guid: 6520dda4a70dfbf40a55b7af39ecda4e, type: 3}
+  - {fileID: 2473453845335418800, guid: 6520dda4a70dfbf40a55b7af39ecda4e, type: 3}
+  - {fileID: -3287367053296241113, guid: 6520dda4a70dfbf40a55b7af39ecda4e, type: 3}
+  - {fileID: -5319882733741912588, guid: 6520dda4a70dfbf40a55b7af39ecda4e, type: 3}
+  frameTime: 0.08
 --- !u!50 &3766948904690192589
 Rigidbody2D:
   serializedVersion: 5
