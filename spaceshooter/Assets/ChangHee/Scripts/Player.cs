@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
     public Sprite[] rightSprites = new Sprite[4];
     public Sprite[] leftSprites = new Sprite[4];
 
+    // 상하 이동 애니메이션 프레임(위/아래 공용으로 하나만 사용)
+    public Sprite[] verticalSprites = new Sprite[4];
+
     // 프레임이 바뀌는 속도 (작을수록 더 빨리 바뀜)
     public float frameTime = 0.08f;
 
@@ -36,7 +39,8 @@ public class Player : MonoBehaviour
     private float frameTimer;
     private int frameIndex;
 
-    // 현재 바라보는 방향 저장 (-1: 왼쪽, 0: 중앙, 1: 오른쪽)
+    // 현재 바라보는 방향 저장
+    // -1: 왼쪽, 0: 중앙, 1: 오른쪽, 2: 상하
     private int currentDir;
 
     // -----------------------------------------------
@@ -78,6 +82,10 @@ public class Player : MonoBehaviour
 
     void UpdateSpriteByDirection()
     {
+        // 대각선으로 눌렀을 때는 아래 순서대로 검사하므로
+        // 좌우 애니메이션이 상하보다 우선 적용됨
+        // (원하면 나중에 우선순위를 바꿀 수 있음)
+
         // 오른쪽 이동: rightSprites를 0→1→2→3 순서로 반복
         if (moveX > 0)
         {
@@ -106,7 +114,35 @@ public class Player : MonoBehaviour
             return;
         }
 
-        // 좌우 입력이 없으면 기본 이미지로 복귀
+        // 위쪽 이동: verticalSprites를 0→1→2→3 순서로 반복
+        if (moveY > 0)
+        {
+            if (currentDir != 2)
+            {
+                currentDir = 2;
+                frameIndex = 0;
+                frameTimer = 0f;
+            }
+
+            PlayFrameAnimation(verticalSprites);
+            return;
+        }
+
+        // 아래쪽 이동: verticalSprites를 0→1→2→3 순서로 반복
+        if (moveY < 0)
+        {
+            if (currentDir != 2)
+            {
+                currentDir = 2;
+                frameIndex = 0;
+                frameTimer = 0f;
+            }
+
+            PlayFrameAnimation(verticalSprites);
+            return;
+        }
+
+        // 입력이 없으면 기본 이미지로 복귀
         currentDir = 0;
         frameIndex = 0;
         frameTimer = 0f;
