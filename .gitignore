@@ -15,6 +15,15 @@
 /[Uu]ser[Ss]ettings/
 *.log
 
+# Unity project is inside spaceshooter/ in this repo
+/spaceshooter/[Ll]ibrary/
+/spaceshooter/[Tt]emp/
+/spaceshooter/[Oo]bj/
+/spaceshooter/[Bb]uild/
+/spaceshooter/[Bb]uilds/
+/spaceshooter/[Ll]ogs/
+/spaceshooter/[Uu]ser[Ss]ettings/
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
