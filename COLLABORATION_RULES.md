@@ -13,21 +13,6 @@
 |      |           |
 |      |           |
 
----
-
-## 🌿 브랜치 전략
-
-- `main` : 항상 안정적인 상태 유지. **직접 push 금지**
-- `develop` : 통합 브랜치. 기능 완성 후 여기에 merge
-- `feature/기능명` : 개인 작업 브랜치 (예: `feature/player-movement`)
-- `fix/버그명` : 버그 수정 브랜치 (예: `fix/bullet-collision`)
-
-### 브랜치 작업 흐름
-```
-feature/기능명 → develop → main
-```
-
----
 
 ## 📝 커밋 규칙
 
@@ -96,14 +81,6 @@ Assets/
 - `Logs/` 폴더
 - `.DS_Store`, `Thumbs.db`
 - 개인 IDE 설정 파일
-
----
-
-## 📋 Pull Request / Merge 규칙
-
-- `develop` 브랜치로 merge 시 최소 **1명 이상의 리뷰** 필요
-- 리뷰 없이 직접 merge 금지
-- merge 전 본인 브랜치에서 최신 `develop`을 pull 받아 충돌 해결 후 요청
 
 ---
 
